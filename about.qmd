@@ -1,0 +1,16 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/
+    - icon: github
+      text: Github
+      href: https://github.com/
+
+---
+
+Welcome to my data science blog, where I share projects, explanations, and insights from my learning journey in analytics and machine learning. This space is a collection of topics I explore through coursework, hands-on practice, and real-world applications.
