@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.21">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="XXX">
+<meta name="dcterms.date" content="2026-01-13">
+<meta name="description" content="A beginner-friendly explanation of how learning analytics can identify struggling students early, and what student data can (and can’t) tell us.">
+
+<title>Before It’s Too Late: How Learning Analytics Detects Early Warning Signs in Online Learning – Data Science Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea1d7ac60288e0f1efdbc993fd8432ae.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-26827f95213357c060b998e0666f8ebe.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Data Science Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Before It’s Too Late: How Learning Analytics Detects Early Warning Signs in Online Learning</h1>
+                  <div>
+        <div class="description">
+          A beginner-friendly explanation of how learning analytics can identify struggling students early, and what student data can (and can’t) tell us.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Education</div>
+                <div class="quarto-category">Learning Analytics</div>
+                <div class="quarto-category">Student Success</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>XXX </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 13, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction-online-learning-leaves-clues" id="toc-introduction-online-learning-leaves-clues" class="nav-link active" data-scroll-target="#introduction-online-learning-leaves-clues">Introduction: Online Learning Leaves Clues</a></li>
+  <li><a href="#what-is-learning-analytics" id="toc-what-is-learning-analytics" class="nav-link" data-scroll-target="#what-is-learning-analytics">What Is Learning Analytics?</a></li>
+  <li><a href="#why-early-warning-signals-matter" id="toc-why-early-warning-signals-matter" class="nav-link" data-scroll-target="#why-early-warning-signals-matter">Why Early Warning Signals Matter</a></li>
+  <li><a href="#what-student-behavior-data-can-reveal" id="toc-what-student-behavior-data-can-reveal" class="nav-link" data-scroll-target="#what-student-behavior-data-can-reveal">What Student Behavior Data Can Reveal</a>
+  <ul class="collapse">
+  <li><a href="#engagement-trends-across-the-semester" id="toc-engagement-trends-across-the-semester" class="nav-link" data-scroll-target="#engagement-trends-across-the-semester">1) Engagement trends across the semester</a></li>
+  <li><a href="#differences-between-high-and-low-performers" id="toc-differences-between-high-and-low-performers" class="nav-link" data-scroll-target="#differences-between-high-and-low-performers">2) Differences between high and low performers</a></li>
+  </ul></li>
+  <li><a href="#prediction-is-not-the-same-as-causation" id="toc-prediction-is-not-the-same-as-causation" class="nav-link" data-scroll-target="#prediction-is-not-the-same-as-causation">Prediction Is Not the Same as Causation</a></li>
+  <li><a href="#how-predictive-models-flag-at-risk-students-in-simple-terms" id="toc-how-predictive-models-flag-at-risk-students-in-simple-terms" class="nav-link" data-scroll-target="#how-predictive-models-flag-at-risk-students-in-simple-terms">How Predictive Models Flag At-Risk Students (In Simple Terms)</a></li>
+  <li><a href="#turning-insights-into-action-supporting-students-responsibly" id="toc-turning-insights-into-action-supporting-students-responsibly" class="nav-link" data-scroll-target="#turning-insights-into-action-supporting-students-responsibly">Turning Insights Into Action: Supporting Students Responsibly</a></li>
+  <li><a href="#ethical-concerns-privacy-bias-and-trust" id="toc-ethical-concerns-privacy-bias-and-trust" class="nav-link" data-scroll-target="#ethical-concerns-privacy-bias-and-trust">Ethical Concerns: Privacy, Bias, and Trust</a>
+  <ul class="collapse">
+  <li><a href="#privacy-and-consent" id="toc-privacy-and-consent" class="nav-link" data-scroll-target="#privacy-and-consent">1) Privacy and consent</a></li>
+  <li><a href="#bias-and-unfair-assumptions" id="toc-bias-and-unfair-assumptions" class="nav-link" data-scroll-target="#bias-and-unfair-assumptions">2) Bias and unfair assumptions</a></li>
+  <li><a href="#avoiding-surveillance-culture" id="toc-avoiding-surveillance-culture" class="nav-link" data-scroll-target="#avoiding-surveillance-culture">3) Avoiding “surveillance culture”</a></li>
+  </ul></li>
+  <li><a href="#communicating-learning-analytics-clearly-without-jargon" id="toc-communicating-learning-analytics-clearly-without-jargon" class="nav-link" data-scroll-target="#communicating-learning-analytics-clearly-without-jargon">Communicating Learning Analytics Clearly (Without Jargon)</a></li>
+  <li><a href="#conclusion-using-data-to-support-not-judge" id="toc-conclusion-using-data-to-support-not-judge" class="nav-link" data-scroll-target="#conclusion-using-data-to-support-not-judge">Conclusion: Using Data to Support, Not Judge</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction-online-learning-leaves-clues" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-online-learning-leaves-clues">Introduction: Online Learning Leaves Clues</h2>
+<p>Online learning has changed the way education works. Students no longer learn only in physical classrooms with fixed schedules and face-to-face interaction. Instead, many students now watch recorded lectures, submit assignments digitally, and participate through discussion forums or online quizzes.</p>
+<p>While this makes education more flexible and accessible, it also creates a major challenge: <strong>how do instructors know when a student is struggling?</strong></p>
+<p>In a traditional classroom, educators can rely on visible cues. A student might look confused, stop participating, or ask questions after class. But online, those signals are often missing. A student can quietly fall behind without anyone noticing until a midterm grade or final exam makes it obvious.</p>
+<p>This is where <strong>learning analytics</strong> becomes powerful. Learning analytics uses data from online learning platforms to understand student engagement patterns, identify early warning signals, and support students sooner.</p>
+<p>However, it is important to be clear: <strong>learning analytics is not about surveillance or replacing instructors with algorithms.</strong> It is about using data to improve support systems in a way that is timely, fair, and ethical.</p>
+<hr>
+</section>
+<section id="what-is-learning-analytics" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-learning-analytics">What Is Learning Analytics?</h2>
+<p><strong>Learning analytics</strong> refers to the process of collecting, analyzing, and interpreting data related to learning activities. Most online learning platforms already collect this data automatically during normal use.</p>
+<p>For example, platforms like Canvas, Moodle, or Coursera may record:</p>
+<ul>
+<li>logins and time spent on the platform</li>
+<li>video views and completion progress</li>
+<li>assignment submissions and timestamps</li>
+<li>quiz attempts and scores</li>
+<li>discussion forum participation</li>
+<li>downloads or clicks on course materials</li>
+</ul>
+<p>Individually, these actions may seem unimportant. But when combined over time, they form a pattern of behavior. Learning analytics helps educators understand these patterns and answer questions like:</p>
+<ul>
+<li>Are students engaging consistently or only right before deadlines?</li>
+<li>Do some students stop participating after week 3 or week 5?</li>
+<li>Which resources are actually being used?</li>
+<li>Are students falling behind early without realizing it?</li>
+</ul>
+<blockquote class="blockquote">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/pipeline.jpg" class="img-fluid figure-img"></p>
+<figcaption>Learning analytics pipeline</figcaption>
+</figure>
+</div>
+</blockquote>
+<hr>
+</section>
+<section id="why-early-warning-signals-matter" class="level2">
+<h2 class="anchored" data-anchor-id="why-early-warning-signals-matter">Why Early Warning Signals Matter</h2>
+<p>A major advantage of learning analytics is that it enables <strong>proactive support</strong>, instead of waiting for failure.</p>
+<p>In many courses, the first major exam or project happens several weeks into the term. By the time a student performs poorly, they may already feel discouraged, overwhelmed, or too far behind to recover easily.</p>
+<p>Early warning signals help instructors notice patterns like:</p>
+<ul>
+<li>missed first assignment</li>
+<li>low engagement with course materials</li>
+<li>declining participation week-to-week</li>
+<li>repeated quiz attempts with low scores</li>
+<li>long gaps between logins</li>
+</ul>
+<p>These signals do not automatically mean a student is “lazy” or “not trying.” Students may disengage for many reasons, such as:</p>
+<ul>
+<li>poor time management</li>
+<li>mental health challenges</li>
+<li>family responsibilities</li>
+<li>unfamiliarity with online learning</li>
+<li>difficulty understanding course content</li>
+<li>technical issues or access limitations</li>
+</ul>
+<p>The goal of learning analytics is not to judge students. It is to <strong>identify who might need support earlier</strong>.</p>
+<hr>
+</section>
+<section id="what-student-behavior-data-can-reveal" class="level2">
+<h2 class="anchored" data-anchor-id="what-student-behavior-data-can-reveal">What Student Behavior Data Can Reveal</h2>
+<section id="engagement-trends-across-the-semester" class="level3">
+<h3 class="anchored" data-anchor-id="engagement-trends-across-the-semester">1) Engagement trends across the semester</h3>
+<p>One of the simplest and most useful analyses is tracking engagement over time.</p>
+<p>For example, an instructor might look at weekly activity levels such as:</p>
+<ul>
+<li>number of logins per week</li>
+<li>number of video lectures watched</li>
+<li>number of completed quizzes</li>
+<li>forum posts or replies</li>
+</ul>
+<p>Often, engagement patterns show predictable trends:</p>
+<ul>
+<li>activity peaks before deadlines</li>
+<li>activity drops mid-semester</li>
+<li>activity spikes again before final exams</li>
+</ul>
+<blockquote class="blockquote">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/weekly_engagement.jpg" class="img-fluid figure-img"></p>
+<figcaption>Weekly Engagement Trend Line Chart</figcaption>
+</figure>
+</div>
+</blockquote>
+<p>This helps educators reflect on course structure. If engagement drops sharply after week 4, it might suggest:</p>
+<ul>
+<li>the content becomes more difficult suddenly</li>
+<li>workload increases too quickly</li>
+<li>students are facing midterm overload across courses</li>
+</ul>
+<hr>
+</section>
+<section id="differences-between-high-and-low-performers" class="level3">
+<h3 class="anchored" data-anchor-id="differences-between-high-and-low-performers">2) Differences between high and low performers</h3>
+<p>Learning analytics can also help explore how engagement relates to outcomes.</p>
+<p>For example, students who perform well may:</p>
+<ul>
+<li>watch lectures earlier in the week</li>
+<li>submit assignments before deadlines</li>
+<li>review feedback consistently</li>
+<li>spread their studying across time</li>
+</ul>
+<p>Whereas struggling students may:</p>
+<ul>
+<li>binge-watch lectures at the last minute</li>
+<li>skip practice quizzes</li>
+<li>submit late or miss deadlines</li>
+<li>stop logging in after early weeks</li>
+</ul>
+<blockquote class="blockquote">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/engagement_vs_grades.jpg" class="img-fluid figure-img"></p>
+<figcaption>Engagement vs Grades Bar Chart</figcaption>
+</figure>
+</div>
+</blockquote>
+<p>But this leads to an important caution.</p>
+<hr>
+</section>
+</section>
+<section id="prediction-is-not-the-same-as-causation" class="level2">
+<h2 class="anchored" data-anchor-id="prediction-is-not-the-same-as-causation">Prediction Is Not the Same as Causation</h2>
+<p>One of the biggest misunderstandings in learning analytics is assuming that <strong>correlation = causation</strong>.</p>
+<p>For example, imagine we find this pattern:</p>
+<blockquote class="blockquote">
+<p>Students who log in more often tend to get higher grades.</p>
+</blockquote>
+<p>This does <strong>not</strong> mean that forcing students to log in more will automatically improve their performance.</p>
+<p>Frequent logins could be a <em>signal</em> of other things, such as:</p>
+<ul>
+<li>motivation</li>
+<li>stronger study habits</li>
+<li>prior knowledge</li>
+<li>more free time</li>
+<li>better access to technology</li>
+</ul>
+<p>So learning analytics should be interpreted carefully. The goal is not to create rigid rules like:</p>
+<ul>
+<li>❌ “If you don’t log in 5 times per week, you are failing.”</li>
+</ul>
+<p>Instead, the goal is:</p>
+<ul>
+<li>✅ “This pattern suggests you might need support, let’s check in.”</li>
+</ul>
+<blockquote class="blockquote">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/correlation_vs_causation.jpg" class="img-fluid figure-img"></p>
+<figcaption>Associated with success” ≠ “Direct cause of success</figcaption>
+</figure>
+</div>
+</blockquote>
+<hr>
+</section>
+<section id="how-predictive-models-flag-at-risk-students-in-simple-terms" class="level2">
+<h2 class="anchored" data-anchor-id="how-predictive-models-flag-at-risk-students-in-simple-terms">How Predictive Models Flag At-Risk Students (In Simple Terms)</h2>
+<p>Learning analytics can go beyond descriptive patterns and use <strong>predictive modeling</strong> to estimate which students may be at risk.</p>
+<p>A predictive model might use features like:</p>
+<ul>
+<li>assignment completion rate</li>
+<li>average quiz score</li>
+<li>number of missed deadlines</li>
+<li>time since last login</li>
+<li>video completion percentage</li>
+<li>discussion activity</li>
+</ul>
+<p>Then it outputs something like:</p>
+<ul>
+<li>probability of passing the course</li>
+<li>risk category: low / medium / high risk</li>
+<li>likelihood of dropping out</li>
+</ul>
+<p>This is similar to how platforms recommend content or how banks detect fraud, except the goal here is educational support.</p>
+<blockquote class="blockquote">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/early_warning_timeline.jpg" class="img-fluid figure-img"></p>
+<figcaption>Early Warning Timeline</figcaption>
+</figure>
+</div>
+</blockquote>
+<p>The best predictive systems do <strong>not</strong> replace instructors. They act like a “signal detector” that says:</p>
+<blockquote class="blockquote">
+<p>“Something might be off here-take a closer look.”</p>
+</blockquote>
+<hr>
+</section>
+<section id="turning-insights-into-action-supporting-students-responsibly" class="level2">
+<h2 class="anchored" data-anchor-id="turning-insights-into-action-supporting-students-responsibly">Turning Insights Into Action: Supporting Students Responsibly</h2>
+<p>Data is only useful if it leads to action that improves learning.</p>
+<p>Once an instructor identifies possible early warning signs, they can respond with supportive interventions such as:</p>
+<ul>
+<li>sending a gentle check-in email</li>
+<li>reminding students about office hours</li>
+<li>offering extra review sessions</li>
+<li>sharing study resources</li>
+<li>connecting students with advising support</li>
+<li>adjusting course pacing or content clarity</li>
+</ul>
+<p>These actions work best when they feel helpful, not punishing.</p>
+<p>For example:</p>
+<p>✅ Supportive message:</p>
+<blockquote class="blockquote">
+<p>“Hi! I noticed you haven’t submitted the first quiz yet. If you’re stuck or unsure where to start, I’m happy to help. Here are a few resources…”</p>
+</blockquote>
+<p>❌ Punitive message:</p>
+<blockquote class="blockquote">
+<p>“You are not participating enough. You must increase engagement immediately.”</p>
+</blockquote>
+<p>Learning analytics should create a sense of <strong>support</strong>, not fear.</p>
+<hr>
+</section>
+<section id="ethical-concerns-privacy-bias-and-trust" class="level2">
+<h2 class="anchored" data-anchor-id="ethical-concerns-privacy-bias-and-trust">Ethical Concerns: Privacy, Bias, and Trust</h2>
+<p>Because learning analytics uses student data, ethics matters deeply. Students deserve transparency and fairness.</p>
+<p>Some key concerns include:</p>
+<section id="privacy-and-consent" class="level3">
+<h3 class="anchored" data-anchor-id="privacy-and-consent">1) Privacy and consent</h3>
+<p>Students should know:</p>
+<ul>
+<li>what data is collected</li>
+<li>how it is used</li>
+<li>who has access to it</li>
+<li>how long it is stored</li>
+</ul>
+</section>
+<section id="bias-and-unfair-assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="bias-and-unfair-assumptions">2) Bias and unfair assumptions</h3>
+<p>Models may unintentionally disadvantage students who:</p>
+<ul>
+<li>work part-time jobs</li>
+<li>have limited internet access</li>
+<li>live in different time zones</li>
+<li>participate less in visible ways but still learn effectively</li>
+</ul>
+</section>
+<section id="avoiding-surveillance-culture" class="level3">
+<h3 class="anchored" data-anchor-id="avoiding-surveillance-culture">3) Avoiding “surveillance culture”</h3>
+<p>Analytics should not create an environment where students feel constantly watched.</p>
+<p>A healthier approach is:</p>
+<ul>
+<li>use aggregated trends for course improvement</li>
+<li>use individual-level flags only for support</li>
+<li>avoid making automated decisions without human review</li>
+</ul>
+<blockquote class="blockquote">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ethics_icons.jpg" class="img-fluid figure-img"></p>
+<figcaption>Ethics Icons</figcaption>
+</figure>
+</div>
+</blockquote>
+<p>Ethical learning analytics is not just a technical challenge, it is a human one.</p>
+<hr>
+</section>
+</section>
+<section id="communicating-learning-analytics-clearly-without-jargon" class="level2">
+<h2 class="anchored" data-anchor-id="communicating-learning-analytics-clearly-without-jargon">Communicating Learning Analytics Clearly (Without Jargon)</h2>
+<p>Even the best analysis fails if it is not communicated well.</p>
+<p>To communicate learning analytics effectively:</p>
+<ul>
+<li>use plain language (avoid unnecessary technical terms)</li>
+<li>explain uncertainty honestly (“this suggests”, not “this proves”)</li>
+<li>use simple visuals (charts, timelines, comparisons)</li>
+<li>focus on student support, not student control</li>
+</ul>
+<p>A good learning analytics system should be understandable to:</p>
+<ul>
+<li>instructors</li>
+<li>administrators</li>
+<li>and ideally, students themselves</li>
+</ul>
+<hr>
+</section>
+<section id="conclusion-using-data-to-support-not-judge" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-using-data-to-support-not-judge">Conclusion: Using Data to Support, Not Judge</h2>
+<p>Online learning creates a new challenge: students can struggle silently, without visible classroom cues. Learning analytics helps educators understand engagement patterns, detect early warning signals, and respond sooner with meaningful support.</p>
+<p>But learning analytics works best when it is used responsibly:</p>
+<ul>
+<li>as a guide, not a final decision-maker</li>
+<li>with awareness of bias and privacy risks</li>
+<li>and with a focus on compassion and student success</li>
+</ul>
+<p>When used ethically, learning analytics becomes more than “data about students.”<br>
+It becomes a bridge between <strong>digital behavior</strong> and <strong>human support</strong>,helping educators reach students before it’s too late.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
