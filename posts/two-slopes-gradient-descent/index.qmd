@@ -1,0 +1,28 @@
+---
+title: "Two Slopes, Two Graphs"
+subtitle: "An intuition for gradient descent"
+author: "Shrijaa Venkatasubramanian Subashini"
+date: 2026-02-04
+categories: [optimization, linear-regression, intuition]
+format:
+  html:
+    toc: true
+    toc-depth: 3
+---
+## Why this post exists
+
+## The regression slope: what \(w\) controls
+
+## The loss curve: what the gradient actually measures
+
+## Two slopes, two graphs, two meanings
+
+## Why a negative gradient can increase \(w\)
+
+## How these two slopes are connected
+
+## The role of the learning rate
+
+## A note on curvature
+
+## Final mental model
