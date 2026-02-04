@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/two-slopes-gradient-descent/index.html",
       "/posts/learning-analytics/index.html"
     ]
   }

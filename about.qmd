@@ -6,10 +6,10 @@ about:
   links:
     - icon: linkedin
       text: LinkedIn
-      href: https://www.linkedin.com/
+      href: https://www.linkedin.com/in/shrijaa-venkatasubramanian-443aa9259/
     - icon: github
       text: Github
-      href: https://github.com/
+      href: https://github.com/shrijaavs2004
 
 ---
 
