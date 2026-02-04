@@ -158,15 +158,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#why-this-post-exists" id="toc-why-this-post-exists" class="nav-link active" data-scroll-target="#why-this-post-exists">Why this post exists</a></li>
-  <li><a href="#the-regression-slope-what-w-controls" id="toc-the-regression-slope-what-w-controls" class="nav-link" data-scroll-target="#the-regression-slope-what-w-controls">The regression slope: what (w) controls</a></li>
-  <li><a href="#the-loss-curve-what-the-gradient-actually-measures" id="toc-the-loss-curve-what-the-gradient-actually-measures" class="nav-link" data-scroll-target="#the-loss-curve-what-the-gradient-actually-measures">The loss curve: what the gradient actually measures</a></li>
+  <li><a href="#the-moment-gradient-descent-stopped-feeling-obvious" id="toc-the-moment-gradient-descent-stopped-feeling-obvious" class="nav-link active" data-scroll-target="#the-moment-gradient-descent-stopped-feeling-obvious">The moment gradient descent stopped feeling obvious</a></li>
+  <li><a href="#understanding-the-slope-of-the-regression-line" id="toc-understanding-the-slope-of-the-regression-line" class="nav-link" data-scroll-target="#understanding-the-slope-of-the-regression-line">Understanding the slope of the regression line</a></li>
+  <li><a href="#interpreting-the-loss-as-a-function-of-the-slope" id="toc-interpreting-the-loss-as-a-function-of-the-slope" class="nav-link" data-scroll-target="#interpreting-the-loss-as-a-function-of-the-slope">Interpreting the loss as a function of the slope</a></li>
   <li><a href="#two-slopes-two-graphs-two-meanings" id="toc-two-slopes-two-graphs-two-meanings" class="nav-link" data-scroll-target="#two-slopes-two-graphs-two-meanings">Two slopes, two graphs, two meanings</a></li>
-  <li><a href="#why-a-negative-gradient-can-increase-w" id="toc-why-a-negative-gradient-can-increase-w" class="nav-link" data-scroll-target="#why-a-negative-gradient-can-increase-w">Why a negative gradient can increase (w)</a></li>
+  <li><a href="#why-a-negative-gradient-can-increase-the-slope" id="toc-why-a-negative-gradient-can-increase-the-slope" class="nav-link" data-scroll-target="#why-a-negative-gradient-can-increase-the-slope">Why a negative gradient can increase the slope</a></li>
   <li><a href="#how-these-two-slopes-are-connected" id="toc-how-these-two-slopes-are-connected" class="nav-link" data-scroll-target="#how-these-two-slopes-are-connected">How these two slopes are connected</a></li>
   <li><a href="#the-role-of-the-learning-rate" id="toc-the-role-of-the-learning-rate" class="nav-link" data-scroll-target="#the-role-of-the-learning-rate">The role of the learning rate</a></li>
-  <li><a href="#a-note-on-curvature" id="toc-a-note-on-curvature" class="nav-link" data-scroll-target="#a-note-on-curvature">A note on curvature</a></li>
-  <li><a href="#final-mental-model" id="toc-final-mental-model" class="nav-link" data-scroll-target="#final-mental-model">Final mental model</a></li>
+  <li><a href="#why-curvature-starts-to-matter" id="toc-why-curvature-starts-to-matter" class="nav-link" data-scroll-target="#why-curvature-starts-to-matter">Why curvature starts to matter</a></li>
+  <li><a href="#the-mental-model-that-finally-clicked" id="toc-the-mental-model-that-finally-clicked" class="nav-link" data-scroll-target="#the-mental-model-that-finally-clicked">The mental model that finally clicked</a></li>
   </ul>
 </nav>
     </div>
@@ -177,20 +177,24 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="why-this-post-exists" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-post-exists">Why this post exists</h2>
+<section id="the-moment-gradient-descent-stopped-feeling-obvious" class="level2">
+<h2 class="anchored" data-anchor-id="the-moment-gradient-descent-stopped-feeling-obvious">The moment gradient descent stopped feeling obvious</h2>
+<p>At some point while learning gradient descent, many of us have the same quiet moment of doubt. The equations check out, the code runs, the loss decreases, and yet something about the update rule feels unintuitive.</p>
+<p>That moment hit me while working through a simple linear regression example. The gradient of the loss with respect to the slope was negative, but the update step clearly required increasing the slope parameter. The algorithm was doing the right thing, but my intuition was lagging behind. If the gradient was negative, why was I moving in what felt like the “wrong” direction?</p>
+<p>That question turned out to be more interesting than I expected. The issue was not with gradient descent itself, but with how I was thinking about it. I had been unconsciously treating all “slopes” as the same thing, even though they belong to entirely different graphs. One slope describes the regression line in data space, while the other describes how the loss changes as the model parameter changes.</p>
+<p>Once I separated these two ideas, the behavior of gradient descent became much clearer. This post is an attempt to capture that mental shift. It presents a way of thinking about gradient descent in terms of two slopes, two graphs, and two meanings, and how their interaction drives the process of finding a regression line that minimizes loss.</p>
 </section>
-<section id="the-regression-slope-what-w-controls" class="level2">
-<h2 class="anchored" data-anchor-id="the-regression-slope-what-w-controls">The regression slope: what (w) controls</h2>
+<section id="understanding-the-slope-of-the-regression-line" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-slope-of-the-regression-line">Understanding the slope of the regression line</h2>
 </section>
-<section id="the-loss-curve-what-the-gradient-actually-measures" class="level2">
-<h2 class="anchored" data-anchor-id="the-loss-curve-what-the-gradient-actually-measures">The loss curve: what the gradient actually measures</h2>
+<section id="interpreting-the-loss-as-a-function-of-the-slope" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-loss-as-a-function-of-the-slope">Interpreting the loss as a function of the slope</h2>
 </section>
 <section id="two-slopes-two-graphs-two-meanings" class="level2">
 <h2 class="anchored" data-anchor-id="two-slopes-two-graphs-two-meanings">Two slopes, two graphs, two meanings</h2>
 </section>
-<section id="why-a-negative-gradient-can-increase-w" class="level2">
-<h2 class="anchored" data-anchor-id="why-a-negative-gradient-can-increase-w">Why a negative gradient can increase (w)</h2>
+<section id="why-a-negative-gradient-can-increase-the-slope" class="level2">
+<h2 class="anchored" data-anchor-id="why-a-negative-gradient-can-increase-the-slope">Why a negative gradient can increase the slope</h2>
 </section>
 <section id="how-these-two-slopes-are-connected" class="level2">
 <h2 class="anchored" data-anchor-id="how-these-two-slopes-are-connected">How these two slopes are connected</h2>
@@ -198,11 +202,11 @@ ul.task-list li input[type="checkbox"] {
 <section id="the-role-of-the-learning-rate" class="level2">
 <h2 class="anchored" data-anchor-id="the-role-of-the-learning-rate">The role of the learning rate</h2>
 </section>
-<section id="a-note-on-curvature" class="level2">
-<h2 class="anchored" data-anchor-id="a-note-on-curvature">A note on curvature</h2>
+<section id="why-curvature-starts-to-matter" class="level2">
+<h2 class="anchored" data-anchor-id="why-curvature-starts-to-matter">Why curvature starts to matter</h2>
 </section>
-<section id="final-mental-model" class="level2">
-<h2 class="anchored" data-anchor-id="final-mental-model">Final mental model</h2>
+<section id="the-mental-model-that-finally-clicked" class="level2">
+<h2 class="anchored" data-anchor-id="the-mental-model-that-finally-clicked">The mental model that finally clicked</h2>
 
 
 </section>
