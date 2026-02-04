@@ -88,6 +88,62 @@
     "href": "index.html",
     "title": "Projects, explanations, and reflections in data science.",
     "section": "",
-    "text": "Before It’s Too Late: How Learning Analytics Detects Early Warning Signs in Online Learning\n\n\n\nEducation\n\nLearning Analytics\n\nStudent Success\n\n\n\nA beginner-friendly explanation of how learning analytics can identify struggling students early, and what student data can (and can’t) tell us.\n\n\n\n\n\nJan 13, 2026\n\n\nShrijaa Venkatasubramanian Subashini\n\n\n\n\n\nNo matching items"
+    "text": "Two Slopes, Two Graphs\n\n\nAn intuition for gradient descent\n\n\n\noptimization\n\nlinear-regression\n\nintuition\n\n\n\n\n\n\n\n\n\nFeb 4, 2026\n\n\nShrijaa Venkatasubramanian Subashini\n\n\n\n\n\n\n\n\n\n\n\n\nBefore It’s Too Late: How Learning Analytics Detects Early Warning Signs in Online Learning\n\n\n\n\n\n\nEducation\n\nLearning Analytics\n\nStudent Success\n\n\n\nA beginner-friendly explanation of how learning analytics can identify struggling students early, and what student data can (and can’t) tell us.\n\n\n\n\n\nJan 13, 2026\n\n\nShrijaa Venkatasubramanian Subashini\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/two-slopes-gradient-descent/index.html#the-regression-slope-what-w-controls",
+    "href": "posts/two-slopes-gradient-descent/index.html#the-regression-slope-what-w-controls",
+    "title": "Two Slopes, Two Graphs",
+    "section": "The regression slope: what (w) controls",
+    "text": "The regression slope: what (w) controls"
+  },
+  {
+    "objectID": "posts/two-slopes-gradient-descent/index.html#the-loss-curve-what-the-gradient-actually-measures",
+    "href": "posts/two-slopes-gradient-descent/index.html#the-loss-curve-what-the-gradient-actually-measures",
+    "title": "Two Slopes, Two Graphs",
+    "section": "The loss curve: what the gradient actually measures",
+    "text": "The loss curve: what the gradient actually measures"
+  },
+  {
+    "objectID": "posts/two-slopes-gradient-descent/index.html#two-slopes-two-graphs-two-meanings",
+    "href": "posts/two-slopes-gradient-descent/index.html#two-slopes-two-graphs-two-meanings",
+    "title": "Two Slopes, Two Graphs",
+    "section": "Two slopes, two graphs, two meanings",
+    "text": "Two slopes, two graphs, two meanings"
+  },
+  {
+    "objectID": "posts/two-slopes-gradient-descent/index.html#why-a-negative-gradient-can-increase-w",
+    "href": "posts/two-slopes-gradient-descent/index.html#why-a-negative-gradient-can-increase-w",
+    "title": "Two Slopes, Two Graphs",
+    "section": "Why a negative gradient can increase (w)",
+    "text": "Why a negative gradient can increase (w)"
+  },
+  {
+    "objectID": "posts/two-slopes-gradient-descent/index.html#how-these-two-slopes-are-connected",
+    "href": "posts/two-slopes-gradient-descent/index.html#how-these-two-slopes-are-connected",
+    "title": "Two Slopes, Two Graphs",
+    "section": "How these two slopes are connected",
+    "text": "How these two slopes are connected"
+  },
+  {
+    "objectID": "posts/two-slopes-gradient-descent/index.html#the-role-of-the-learning-rate",
+    "href": "posts/two-slopes-gradient-descent/index.html#the-role-of-the-learning-rate",
+    "title": "Two Slopes, Two Graphs",
+    "section": "The role of the learning rate",
+    "text": "The role of the learning rate"
+  },
+  {
+    "objectID": "posts/two-slopes-gradient-descent/index.html#a-note-on-curvature",
+    "href": "posts/two-slopes-gradient-descent/index.html#a-note-on-curvature",
+    "title": "Two Slopes, Two Graphs",
+    "section": "A note on curvature",
+    "text": "A note on curvature"
+  },
+  {
+    "objectID": "posts/two-slopes-gradient-descent/index.html#final-mental-model",
+    "href": "posts/two-slopes-gradient-descent/index.html#final-mental-model",
+    "title": "Two Slopes, Two Graphs",
+    "section": "Final mental model",
+    "text": "Final mental model"
   }
 ]

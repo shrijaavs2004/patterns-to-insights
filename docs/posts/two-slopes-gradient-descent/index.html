@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Shrijaa Venkatasubramanian Subashini">
+<meta name="dcterms.date" content="2026-02-04">
 
-<title>index – Data Science Blog</title>
+<title>Two Slopes, Two Graphs – Shrijaa V S | Data Science Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -83,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Data Science Blog</span>
+    <span class="navbar-title">Shrijaa V S | Data Science Blog</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -97,12 +99,12 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/shrijaavs2004"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/shrijaa-venkatasubramanian-443aa9259/"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -114,10 +116,60 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block"></header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Two Slopes, Two Graphs</h1>
+            <p class="subtitle lead">An intuition for gradient descent</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">optimization</div>
+                <div class="quarto-category">linear-regression</div>
+                <div class="quarto-category">intuition</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Shrijaa Venkatasubramanian Subashini </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 4, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-this-post-exists" id="toc-why-this-post-exists" class="nav-link active" data-scroll-target="#why-this-post-exists">Why this post exists</a></li>
+  <li><a href="#the-regression-slope-what-w-controls" id="toc-the-regression-slope-what-w-controls" class="nav-link" data-scroll-target="#the-regression-slope-what-w-controls">The regression slope: what (w) controls</a></li>
+  <li><a href="#the-loss-curve-what-the-gradient-actually-measures" id="toc-the-loss-curve-what-the-gradient-actually-measures" class="nav-link" data-scroll-target="#the-loss-curve-what-the-gradient-actually-measures">The loss curve: what the gradient actually measures</a></li>
+  <li><a href="#two-slopes-two-graphs-two-meanings" id="toc-two-slopes-two-graphs-two-meanings" class="nav-link" data-scroll-target="#two-slopes-two-graphs-two-meanings">Two slopes, two graphs, two meanings</a></li>
+  <li><a href="#why-a-negative-gradient-can-increase-w" id="toc-why-a-negative-gradient-can-increase-w" class="nav-link" data-scroll-target="#why-a-negative-gradient-can-increase-w">Why a negative gradient can increase (w)</a></li>
+  <li><a href="#how-these-two-slopes-are-connected" id="toc-how-these-two-slopes-are-connected" class="nav-link" data-scroll-target="#how-these-two-slopes-are-connected">How these two slopes are connected</a></li>
+  <li><a href="#the-role-of-the-learning-rate" id="toc-the-role-of-the-learning-rate" class="nav-link" data-scroll-target="#the-role-of-the-learning-rate">The role of the learning rate</a></li>
+  <li><a href="#a-note-on-curvature" id="toc-a-note-on-curvature" class="nav-link" data-scroll-target="#a-note-on-curvature">A note on curvature</a></li>
+  <li><a href="#final-mental-model" id="toc-final-mental-model" class="nav-link" data-scroll-target="#final-mental-model">Final mental model</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -125,7 +177,35 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<section id="why-this-post-exists" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-post-exists">Why this post exists</h2>
+</section>
+<section id="the-regression-slope-what-w-controls" class="level2">
+<h2 class="anchored" data-anchor-id="the-regression-slope-what-w-controls">The regression slope: what (w) controls</h2>
+</section>
+<section id="the-loss-curve-what-the-gradient-actually-measures" class="level2">
+<h2 class="anchored" data-anchor-id="the-loss-curve-what-the-gradient-actually-measures">The loss curve: what the gradient actually measures</h2>
+</section>
+<section id="two-slopes-two-graphs-two-meanings" class="level2">
+<h2 class="anchored" data-anchor-id="two-slopes-two-graphs-two-meanings">Two slopes, two graphs, two meanings</h2>
+</section>
+<section id="why-a-negative-gradient-can-increase-w" class="level2">
+<h2 class="anchored" data-anchor-id="why-a-negative-gradient-can-increase-w">Why a negative gradient can increase (w)</h2>
+</section>
+<section id="how-these-two-slopes-are-connected" class="level2">
+<h2 class="anchored" data-anchor-id="how-these-two-slopes-are-connected">How these two slopes are connected</h2>
+</section>
+<section id="the-role-of-the-learning-rate" class="level2">
+<h2 class="anchored" data-anchor-id="the-role-of-the-learning-rate">The role of the learning rate</h2>
+</section>
+<section id="a-note-on-curvature" class="level2">
+<h2 class="anchored" data-anchor-id="a-note-on-curvature">A note on curvature</h2>
+</section>
+<section id="final-mental-model" class="level2">
+<h2 class="anchored" data-anchor-id="final-mental-model">Final mental model</h2>
 
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

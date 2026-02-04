@@ -1,5 +1,6 @@
 ---
 title: "Projects, explanations, and reflections in data science."
+subtitle: "Thinking through data, models, and intuition"
 listing:
   contents: posts
   sort: "date desc"

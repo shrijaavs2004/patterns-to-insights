@@ -2,7 +2,7 @@
 title: "Before It’s Too Late: How Learning Analytics Detects Early Warning Signs in Online Learning"
 author: "Shrijaa Venkatasubramanian Subashini"
 date: "2026-01-13"
-categories: ["Education", "Learning Analytics", "Student Success"]
+categories: ["education", "learning analytics", "student success"]
 description: "A beginner-friendly explanation of how learning analytics can identify struggling students early, and what student data can (and can’t) tell us."
 format:
   html:
