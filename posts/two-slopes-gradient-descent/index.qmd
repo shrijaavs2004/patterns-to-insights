@@ -9,20 +9,28 @@ format:
     toc: true
     toc-depth: 3
 ---
-## Why this post exists
+## The moment gradient descent stopped feeling obvious
 
-## The regression slope: what \(w\) controls
+At some point while learning gradient descent, many of us have the same quiet moment of doubt. The equations check out, the code runs, the loss decreases, and yet something about the update rule feels unintuitive.
 
-## The loss curve: what the gradient actually measures
+That moment hit me while working through a simple linear regression example. The gradient of the loss with respect to the slope was negative, but the update step clearly required increasing the slope parameter. The algorithm was doing the right thing, but my intuition was lagging behind. If the gradient was negative, why was I moving in what felt like the “wrong” direction?
+
+That question turned out to be more interesting than I expected. The issue was not with gradient descent itself, but with how I was thinking about it. I had been unconsciously treating all “slopes” as the same thing, even though they belong to entirely different graphs. One slope describes the regression line in data space, while the other describes how the loss changes as the model parameter changes.
+
+Once I separated these two ideas, the behavior of gradient descent became much clearer. This post is an attempt to capture that mental shift. It presents a way of thinking about gradient descent in terms of two slopes, two graphs, and two meanings, and how their interaction drives the process of finding a regression line that minimizes loss.
+
+## Understanding the slope of the regression line
+
+## Interpreting the loss as a function of the slope
 
 ## Two slopes, two graphs, two meanings
 
-## Why a negative gradient can increase \(w\)
+## Why a negative gradient can increase the slope
 
 ## How these two slopes are connected
 
 ## The role of the learning rate
 
-## A note on curvature
+## Why curvature starts to matter
 
-## Final mental model
+## The mental model that finally clicked
