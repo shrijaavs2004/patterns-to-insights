@@ -8,9 +8,9 @@ website:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/shrijaavs2004
       - icon: linkedin
-        href: https://www.linkedin.com/
+        href: https://www.linkedin.com/in/shrijaa-venkatasubramanian-443aa9259/
 format:
   html:
     theme:
